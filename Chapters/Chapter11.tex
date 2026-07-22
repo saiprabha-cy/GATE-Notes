@@ -1,0 +1,1520 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 11
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{z-Transform}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!70!black,title=Learning Objectives]
+
+After studying this chapter, the reader will be able to
+
+\begin{itemize}
+\item Understand the need for the z-transform.
+\item Define the bilateral and unilateral z-transforms.
+\item Determine the Region of Convergence (ROC).
+\item Compute z-transforms of standard sequences.
+\item Understand poles and zeros.
+\item Relate the z-transform to the DTFT.
+\end{itemize}
+
+\end{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+The DTFT is useful for frequency analysis, but it does not exist for many important
+sequences.
+
+Example:
+
+\[
+x[n]=u[n]
+\]
+
+has a DTFT that is not absolutely convergent.
+
+To analyze such sequences and solve difference equations systematically, we use the
+\textbf{z-transform}.
+
+The z-transform is the discrete-time counterpart of the Laplace transform.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Complex Variable \(z\)}
+
+The complex variable is written as
+
+\[
+\boxed{
+z=re^{j\omega}
+}
+\]
+
+where
+
+\begin{itemize}
+\item \(r\): magnitude,
+\item \(\omega\): angle.
+\end{itemize}
+
+The \(z\)-plane is a complex plane with
+
+\[
+z=\sigma+j\Omega.
+\]
+
+The unit circle is
+
+\[
+\boxed{
+|z|=1.
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bilateral z-Transform}
+
+The bilateral (two-sided) z-transform is
+
+\[
+\boxed{
+X(z)=
+\sum_{n=-\infty}^{\infty}
+x[n]z^{-n}
+}
+\]
+
+The summation includes all integer values of \(n\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Region of Convergence (ROC)}
+
+The values of \(z\) for which the series converges form the
+\textbf{Region of Convergence}.
+
+\[
+\boxed{
+\text{ROC}=
+\{z:\sum |x[n]z^{-n}|<\infty\}
+}
+\]
+
+The ROC is as important as the transform itself.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Unilateral z-Transform}
+
+For causal sequences, we often use the one-sided transform:
+
+\[
+\boxed{
+X^+(z)=
+\sum_{n=0}^{\infty}
+x[n]z^{-n}
+}
+\]
+
+This is convenient for solving difference equations with initial conditions.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{z-Transform of the Unit Sample}
+
+Let
+
+\[
+x[n]=\delta[n].
+\]
+
+Then
+
+\[
+X(z)=
+\sum_{n=-\infty}^{\infty}
+\delta[n]z^{-n}.
+\]
+
+Only \(n=0\) contributes:
+
+\[
+\boxed{
+X(z)=1
+}
+\]
+
+The ROC is the entire \(z\)-plane.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{z-Transform of the Unit Step}
+
+Let
+
+\[
+x[n]=u[n].
+\]
+
+Then
+
+\[
+X(z)=
+\sum_{n=0}^{\infty}z^{-n}.
+\]
+
+This is a geometric series:
+
+\[
+X(z)=
+\frac{1}{1-z^{-1}}
+\]
+
+provided
+
+\[
+|z^{-1}|<1.
+\]
+
+Hence,
+
+\[
+\boxed{
+u[n]
+\xleftrightarrow{\mathcal{Z}}
+\frac{1}{1-z^{-1}},
+\qquad
+\text{ROC: }|z|>1
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{z-Transform of \(a^n u[n]\)}
+
+Let
+
+\[
+x[n]=a^n u[n].
+\]
+
+Then
+
+\[
+X(z)=
+\sum_{n=0}^{\infty}
+a^n z^{-n}
+=
+\sum_{n=0}^{\infty}
+(az^{-1})^n.
+\]
+
+Therefore,
+
+\[
+\boxed{
+X(z)=
+\frac{1}{1-az^{-1}},
+\qquad
+\text{ROC: }|z|>|a|
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Example}
+
+For
+
+\[
+x[n]=\left(\frac12\right)^n u[n],
+\]
+
+\[
+\boxed{
+X(z)=
+\frac{1}{1-\frac12 z^{-1}},
+\qquad
+\text{ROC: }|z|>\frac12
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Left-Sided Sequence}
+
+Consider
+
+\[
+x[n]=-a^n u[-n-1].
+\]
+
+Then
+
+\[
+X(z)=
+\sum_{n=-\infty}^{-1}
+(-a^n)z^{-n}.
+\]
+
+After simplification,
+
+\[
+\boxed{
+X(z)=
+\frac{1}{1-az^{-1}},
+\qquad
+\text{ROC: }|z|<|a|
+}
+\]
+
+Notice that the algebraic expression is the same as the right-sided sequence, but
+the ROC is different.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{ROC Determines the Sequence}
+
+\[
+\frac{1}{1-az^{-1}}
+\]
+
+can represent three different sequences:
+
+\begin{table}[H]
+\centering
+\caption{Same transform, different ROCs}
+\begin{tabular}{|p{5cm}|p{5cm}|}
+\hline
+\textbf{Sequence} & \textbf{ROC}\\
+\hline
+\(a^n u[n]\) & \(|z|>|a|\)\\
+\hline
+\(-a^n u[-n-1]\) & \(|z|<|a|\)\\
+\hline
+No two-sided sequence exists & \(|z|=|a|\)\\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Poles and Zeros}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Zero}
+
+A value of \(z\) that makes
+
+\[
+X(z)=0.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Pole}
+
+A value of \(z\) that makes
+
+\[
+X(z)\to\infty.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+X(z)=
+\frac{1-z^{-1}}
+{1-0.5z^{-1}}.
+\]
+
+Zero:
+
+\[
+z=1.
+\]
+
+Pole:
+
+\[
+z=0.5.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pole-Zero Plot}
+
+\begin{center}
+\begin{tikzpicture}[scale=2]
+\draw[->] (-1.5,0) -- (1.5,0) node[right] {Re};
+\draw[->] (0,-1.2) -- (0,1.2) node[above] {Im};
+
+\draw (0,0) circle (1);
+
+\draw[thick] (1,0) node[circle,draw,inner sep=1.5pt] {};
+\draw[thick] (0.5,0) node[cross out,draw,inner sep=2pt] {};
+
+\node[below] at (1,0) {$z=1$};
+\node[below] at (0.5,0) {$z=0.5$};
+\end{tikzpicture}
+\end{center}
+
+Convention:
+
+\begin{itemize}
+\item \(\circ\): zero,
+\item \(\times\): pole.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{ROC of Rational Functions}
+
+For rational functions, the ROC is an annular region.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+X(z)=
+\frac{1}
+{(1-0.5z^{-1})(1-2z^{-1})}.
+\]
+
+Possible ROCs:
+
+\begin{itemize}
+\item \(|z|>2\),
+\item \(0.5<|z|<2\),
+\item \(|z|<0.5\).
+\end{itemize}
+
+The ROC cannot contain poles.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Causality from ROC}
+
+A rational sequence is causal if
+
+\[
+\boxed{
+\text{ROC is outside the outermost pole.}
+}
+\]
+
+Example:
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}},
+\qquad
+\text{ROC: }|z|>0.5.
+\]
+
+This corresponds to
+
+\[
+x[n]=(0.5)^n u[n]
+\]
+
+which is causal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Stability from ROC}
+
+A sequence is stable if the DTFT exists, which requires the ROC to include the unit circle.
+
+\[
+\boxed{
+|z|=1 \in \text{ROC}
+}
+\]
+
+For the previous example,
+
+\[
+|z|>0.5
+\]
+
+includes \(|z|=1\), so the sequence is stable.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Connection with DTFT}
+
+Evaluate the z-transform on the unit circle:
+
+\[
+\boxed{
+X(e^{j\omega})=
+X(z)\Big|_{z=e^{j\omega}}
+}
+\]
+
+This is valid only if the unit circle lies inside the ROC.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Example}
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}},
+\qquad
+|z|>0.5.
+\]
+
+Since the unit circle is included,
+
+\[
+X(e^{j\omega})=
+\frac{1}{1-0.5e^{-j\omega}}.
+\]
+
+This is exactly the DTFT of \((0.5)^n u[n]\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Initial Value Theorem}
+
+For causal sequences,
+
+\[
+\boxed{
+x[0]=
+\lim_{z\to\infty}X(z)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+Then
+
+\[
+x[0]=
+\lim_{z\to\infty}
+\frac{1}{1-0.5z^{-1}}
+=1.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Final Value Theorem}
+
+If the limits exist and all poles of \((1-z^{-1})X(z)\) are inside the unit circle,
+
+\[
+\boxed{
+\lim_{n\to\infty}x[n]
+=
+\lim_{z\to1}(1-z^{-1})X(z)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+\[
+(1-z^{-1})X(z)=
+\frac{1-z^{-1}}{1-0.5z^{-1}}.
+\]
+
+At \(z=1\),
+
+\[
+\lim_{n\to\infty}x[n]=0.
+\]
+
+This matches
+
+\[
+(0.5)^n\to0.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Common ROC Patterns}
+
+\begin{table}[H]
+\centering
+\caption{ROC patterns}
+\begin{tabular}{|p{4cm}|p{5cm}|}
+\hline
+\textbf{Sequence Type} & \textbf{ROC}\\
+\hline
+Right-sided & Outside outermost pole\\
+\hline
+Left-sided & Inside innermost pole\\
+\hline
+Two-sided & Between poles\\
+\hline
+Finite-duration right-sided & Entire plane except \(z=0\)\\
+\hline
+Finite-duration left-sided & Entire plane except \(z=\infty\)\\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.1}
+
+Find the z-transform of
+
+\[
+x[n]=3^n u[n].
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Solution}
+
+\[
+X(z)=
+\sum_{n=0}^{\infty}(3z^{-1})^n
+=
+\frac{1}{1-3z^{-1}}
+\]
+
+with ROC
+
+\[
+\boxed{
+|z|>3
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.2}
+
+Find the z-transform of
+
+\[
+x[n]=-\left(\frac12\right)^n u[-n-1].
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Solution}
+
+\[
+\boxed{
+X(z)=
+\frac{1}{1-\frac12 z^{-1}},
+\qquad
+\text{ROC: }|z|<\frac12
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.3}
+
+Determine whether the sequence is stable:
+
+\[
+X(z)=
+\frac{1}{1-2z^{-1}},
+\qquad
+\text{ROC: }|z|>2.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Solution}
+
+The unit circle \(|z|=1\) is not included in the ROC.
+
+Hence,
+
+\[
+\boxed{
+\text{The sequence is unstable.}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.4}
+
+Find the poles and zeros of
+
+\[
+X(z)=
+\frac{1-z^{-1}}
+{1-0.25z^{-1}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Solution}
+
+Zero:
+
+\[
+\boxed{
+z=1
+}
+\]
+
+Pole:
+
+\[
+\boxed{
+z=0.25
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quick Check}
+
+\begin{enumerate}
+\item \(u[n]\rightarrow \boxed{\dfrac{1}{1-z^{-1}}}\).
+\item ROC of \(u[n]\): \(\boxed{|z|>1}\).
+\item Pole of \(\dfrac{1}{1-0.5z^{-1}}\): \(\boxed{0.5}\).
+\item Stable if: \(\boxed{\text{unit circle is in ROC}}\).
+\item DTFT is obtained by: \(\boxed{z=e^{j\omega}}\).
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tcolorbox}[title=One-Minute Revision,colback=blue!5]
+
+\[
+X(z)=
+\sum_{n=-\infty}^{\infty}x[n]z^{-n}
+\]
+
+\[
+X^+(z)=
+\sum_{n=0}^{\infty}x[n]z^{-n}
+\]
+
+\[
+u[n]\leftrightarrow
+\frac{1}{1-z^{-1}},
+\quad |z|>1
+\]
+
+\[
+a^n u[n]\leftrightarrow
+\frac{1}{1-az^{-1}},
+\quad |z|>|a|
+\]
+
+Pole: denominator zero.
+
+Zero: numerator zero.
+
+Causal:
+
+\[
+\text{ROC outside outermost pole}
+\]
+
+Stable:
+
+\[
+|z|=1 \in \text{ROC}
+\]
+
+DTFT:
+
+\[
+X(e^{j\omega})=X(z)|_{z=e^{j\omega}}
+\]
+
+\end{tcolorbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Linearity Property}
+
+If
+
+\[
+x_1[n]\xleftrightarrow{\mathcal{Z}}X_1(z)
+\]
+
+and
+
+\[
+x_2[n]\xleftrightarrow{\mathcal{Z}}X_2(z),
+\]
+
+then
+
+\[
+\boxed{
+a_1x_1[n]+a_2x_2[n]
+\xleftrightarrow{\mathcal{Z}}
+a_1X_1(z)+a_2X_2(z)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Time-Shifting Property}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Delay}
+
+\[
+\boxed{
+x[n-n_0]
+\xleftrightarrow{\mathcal{Z}}
+z^{-n_0}X(z)
+}
+\]
+
+For bilateral transforms, the ROC is unchanged except possibly at the origin or infinity.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Advance}
+
+\[
+\boxed{
+x[n+n_0]
+\xleftrightarrow{\mathcal{Z}}
+z^{n_0}X(z)
+}
+\]
+
+with additional terms for unilateral transforms.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Scaling Property}
+
+\[
+\boxed{
+a^n x[n]
+\xleftrightarrow{\mathcal{Z}}
+X\left(\frac{z}{a}\right)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Time Reversal}
+
+\[
+\boxed{
+x[-n]
+\xleftrightarrow{\mathcal{Z}}
+X(z^{-1})
+}
+\]
+
+The ROC is inverted with respect to the unit circle.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution Property}
+
+If
+
+\[
+y[n]=x[n]*h[n],
+\]
+
+then
+
+\[
+\boxed{
+Y(z)=X(z)H(z)
+}
+\]
+
+This is one of the most powerful properties of the z-transform.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Differentiation Property}
+
+\[
+\boxed{
+nx[n]
+\xleftrightarrow{\mathcal{Z}}
+-z\frac{dX(z)}{dz}
+}
+\]
+
+This is useful for finding moments of sequences.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Initial Value Theorem}
+
+For causal sequences,
+
+\[
+\boxed{
+x[0]=\lim_{z\to\infty}X(z)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+Then
+
+\[
+x[0]=
+\lim_{z\to\infty}
+\frac{1}{1-0.5z^{-1}}
+=1.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Final Value Theorem}
+
+If all poles of \((1-z^{-1})X(z)\) are inside the unit circle,
+
+\[
+\boxed{
+\lim_{n\to\infty}x[n]
+=
+\lim_{z\to1}(1-z^{-1})X(z)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+\[
+(1-z^{-1})X(z)=
+\frac{1-z^{-1}}{1-0.5z^{-1}}.
+\]
+
+At \(z=1\),
+
+\[
+\lim_{n\to\infty}x[n]=0.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Inverse z-Transform}
+
+We now recover \(x[n]\) from \(X(z)\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Method 1: Power-Series Expansion}
+
+Given
+
+\[
+X(z)=
+\frac{1}{1-0.5z^{-1}},
+\qquad |z|>0.5,
+\]
+
+expand as
+
+\[
+X(z)=
+1+0.5z^{-1}+0.25z^{-2}+\cdots
+\]
+
+Hence,
+
+\[
+\boxed{
+x[n]=(0.5)^n u[n]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Method 2: Partial-Fraction Expansion}
+
+Consider
+
+\[
+X(z)=
+\frac{1}
+{(1-0.5z^{-1})(1-0.25z^{-1})}.
+\]
+
+Assume
+
+\[
+X(z)=
+\frac{A}{1-0.5z^{-1}}
++
+\frac{B}{1-0.25z^{-1}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Find \(A\) and \(B\)}
+
+Multiplying both sides,
+
+\[
+1=A(1-0.25z^{-1})+B(1-0.5z^{-1}).
+\]
+
+Set
+
+\[
+z^{-1}=2
+\]
+
+to eliminate the first denominator:
+
+\[
+1=B(1-1)=0
+\]
+
+Instead, compare coefficients:
+
+\[
+A+B=1
+\]
+
+\[
+0.25A+0.5B=0.
+\]
+
+Solving,
+
+\[
+A=2,
+\qquad
+B=-1.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Inverse Transform}
+
+\[
+\boxed{
+x[n]=
+2(0.5)^n u[n]
+-(0.25)^n u[n]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Repeated Poles}
+
+If
+
+\[
+X(z)=
+\frac{1}{(1-az^{-1})^2},
+\]
+
+then
+
+\[
+\boxed{
+x[n]=(n+1)a^n u[n]
+}
+\]
+
+Repeated poles produce polynomial factors in time.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Difference Equations}
+
+Consider the first-order equation
+
+\[
+y[n]-0.5y[n-1]=x[n].
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Zero Initial Conditions}
+
+Taking the unilateral z-transform,
+
+\[
+Y(z)-0.5z^{-1}Y(z)=X(z).
+\]
+
+Hence,
+
+\[
+Y(z)=
+\frac{X(z)}{1-0.5z^{-1}}.
+\]
+
+Therefore,
+
+\[
+\boxed{
+H(z)=
+\frac{1}{1-0.5z^{-1}}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Impulse Response}
+
+For
+
+\[
+x[n]=\delta[n],
+\]
+
+\[
+X(z)=1.
+\]
+
+Thus,
+
+\[
+H(z)=
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+Inverse transform:
+
+\[
+\boxed{
+h[n]=(0.5)^n u[n]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Step Response}
+
+For
+
+\[
+x[n]=u[n],
+\]
+
+\[
+X(z)=
+\frac{1}{1-z^{-1}}.
+\]
+
+Then
+
+\[
+Y(z)=
+\frac{1}{(1-z^{-1})(1-0.5z^{-1})}.
+\]
+
+Using partial fractions,
+
+\[
+Y(z)=
+\frac{2}{1-z^{-1}}
+-
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+Hence,
+
+\[
+\boxed{
+y[n]=
+2u[n]-(0.5)^n u[n]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{System Function}
+
+For a general difference equation
+
+\[
+\sum_{k=0}^{N}a_k y[n-k]
+=
+\sum_{k=0}^{M}b_k x[n-k],
+\]
+
+taking the z-transform gives
+
+\[
+H(z)=
+\frac{Y(z)}{X(z)}
+=
+\frac{\sum_{k=0}^{M}b_k z^{-k}}
+{\sum_{k=0}^{N}a_k z^{-k}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Pole-Zero Interpretation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Poles Near the Unit Circle}
+
+\begin{itemize}
+\item Produce sharp resonances.
+\item Give long impulse responses.
+\item Make the system more selective.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Zeros on the Unit Circle}
+
+\begin{itemize}
+\item Create frequency nulls.
+\item Completely reject specific frequencies.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Example: Notch Filter}
+
+\[
+H(z)=
+\frac{1-2\cos\omega_0 z^{-1}+z^{-2}}
+{1-r(2\cos\omega_0)z^{-1}+r^2 z^{-2}}.
+\]
+
+Zeros at
+
+\[
+z=e^{\pm j\omega_0}
+\]
+
+create a notch at frequency \(\omega_0\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Stability Criterion}
+
+A causal rational system is stable if all poles lie strictly inside the unit circle:
+
+\[
+\boxed{
+|p_i|<1
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Example}
+
+\[
+H(z)=
+\frac{1}{1-1.2z^{-1}}.
+\]
+
+Pole:
+
+\[
+z=1.2.
+\]
+
+Since
+
+\[
+|1.2|>1,
+\]
+
+\[
+\boxed{
+\text{The system is unstable.}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.5}
+
+Find the inverse z-transform of
+
+\[
+X(z)=
+\frac{1}{1-0.8z^{-1}},
+\qquad |z|>0.8.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Solution}
+
+Using the standard pair,
+
+\[
+\boxed{
+x[n]=(0.8)^n u[n]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.6}
+
+Find the inverse z-transform of
+
+\[
+X(z)=
+\frac{1}{1-0.8z^{-1}},
+\qquad |z|<0.8.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Solution}
+
+This is a left-sided sequence:
+
+\[
+\boxed{
+x[n]=-(0.8)^n u[-n-1]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.7}
+
+Solve
+
+\[
+y[n]-0.5y[n-1]=u[n],
+\qquad y[-1]=0.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 1: Transform}
+
+\[
+Y(z)-0.5z^{-1}Y(z)=
+\frac{1}{1-z^{-1}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 2: Solve for \(Y(z)\)}
+
+\[
+Y(z)=
+\frac{1}
+{(1-z^{-1})(1-0.5z^{-1})}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 3: Partial Fractions}
+
+\[
+Y(z)=
+\frac{2}{1-z^{-1}}
+-
+\frac{1}{1-0.5z^{-1}}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 4: Inverse Transform}
+
+\[
+\boxed{
+y[n]=
+2u[n]-(0.5)^n u[n]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Solved Example 11.8}
+
+Determine causality and stability:
+
+\[
+H(z)=
+\frac{1}{(1-0.5z^{-1})(1-0.25z^{-1})}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Causality}
+
+For a causal system,
+
+\[
+\text{ROC: }|z|>0.5.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Stability}
+
+The unit circle is included because
+
+\[
+1>0.5.
+\]
+
+Therefore,
+
+\[
+\boxed{
+\text{The system is causal and stable.}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quick Comparison}
+
+\begin{table}[H]
+\centering
+\caption{DTFT vs z-transform}
+\begin{tabular}{|p{5cm}|p{4cm}|p{4cm}|}
+\hline
+\textbf{Feature} & \textbf{DTFT} & \textbf{z-Transform}\\
+\hline
+Variable & \(e^{j\omega}\) & \(z\)\\
+\hline
+Frequency analysis & Yes & Yes (via unit circle)\\
+\hline
+Difference equations & Limited & Excellent\\
+\hline
+ROC information & No & Yes\\
+\hline
+Stability analysis & Indirect & Direct\\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Important GATE Points}
+
+\begin{enumerate}
+\item The ROC is part of the complete answer.
+\item Same algebraic expression can represent different sequences.
+\item Causal \(\Rightarrow\) ROC outside outermost pole.
+\item Stable \(\Rightarrow\) unit circle included in ROC.
+\item Repeated poles produce polynomial terms.
+\item Use unilateral z-transform when initial conditions are given.
+\item DTFT is obtained by setting \(z=e^{j\omega}\).
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Chapter Summary}
+
+In this chapter, we studied the properties of the z-transform, inverse z-transform
+methods, initial and final value theorems, and the use of the unilateral
+z-transform for solving difference equations.
+
+We also interpreted poles and zeros geometrically and established the direct
+connection between pole locations, causality and stability.
+
+These ideas form the foundation for digital filter design, control systems and
+advanced DSP analysis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tcolorbox}[title=One-Minute Revision,colback=blue!5]
+
+\[
+X(z)=
+\sum_{n=-\infty}^{\infty}x[n]z^{-n}
+\]
+
+\[
+x[n-n_0]\leftrightarrow z^{-n_0}X(z)
+\]
+
+\[
+a^n x[n]\leftrightarrow X\left(\frac{z}{a}\right)
+\]
+
+\[
+x*h\leftrightarrow X(z)H(z)
+\]
+
+\[
+x[0]=\lim_{z\to\infty}X(z)
+\]
+
+\[
+\lim_{n\to\infty}x[n]
+=
+\lim_{z\to1}(1-z^{-1})X(z)
+\]
+
+\[
+a^n u[n]\leftrightarrow
+\frac{1}{1-az^{-1}},
+\quad |z|>|a|
+\]
+
+\[
+(n+1)a^n u[n]
+\leftrightarrow
+\frac{1}{(1-az^{-1})^2}
+\]
+
+Causal:
+
+\[
+\text{ROC outside outermost pole}
+\]
+
+Stable:
+
+\[
+|p_i|<1
+\]
+
+DTFT:
+
+\[
+X(e^{j\omega})=X(z)|_{z=e^{j\omega}}
+\]
+
+\end{tcolorbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

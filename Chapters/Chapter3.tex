@@ -1,0 +1,1014 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 3
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Continuous-Time LTI Systems and Convolution}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!70!black,title=Learning Objectives]
+
+After studying this chapter, the reader will be able to
+
+\begin{itemize}
+\item Define a continuous-time LTI system.
+\item Understand impulse response and its significance.
+\item Derive the convolution integral.
+\item Compute the output of an LTI system using convolution.
+\item Understand the graphical interpretation of convolution.
+\item Use the properties of convolution in problem solving.
+\end{itemize}
+
+\end{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+A \textbf{Linear Time-Invariant (LTI) system} is the most important class of
+systems in Signals and Systems because
+
+\begin{itemize}
+\item they are mathematically tractable,
+\item they model many practical physical systems,
+\item and their behavior is completely determined by a single signal called the
+impulse response.
+\end{itemize}
+
+Examples of systems that can often be modeled as LTI systems include
+
+\begin{itemize}
+\item RC circuits,
+\item RL circuits,
+\item mechanical mass-spring systems,
+\item communication channels,
+\item and many filters used in signal processing.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Definition of an LTI System}
+
+A system is LTI if it satisfies
+
+\begin{enumerate}
+\item \textbf{Linearity}
+\item \textbf{Time invariance}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Linearity}
+
+For inputs \(x_1(t)\) and \(x_2(t)\),
+
+\[
+T\{a_1x_1(t)+a_2x_2(t)\}
+=
+a_1T\{x_1(t)\}+a_2T\{x_2(t)\}.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Time Invariance}
+
+If
+
+\[
+T\{x(t)\}=y(t),
+\]
+
+then
+
+\[
+T\{x(t-t_0)\}=y(t-t_0).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Impulse Response}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Definition}
+
+The response of an LTI system to a unit impulse input is called the
+\textbf{impulse response}.
+
+If
+
+\[
+x(t)=\delta(t),
+\]
+
+then
+
+\[
+\boxed{
+y(t)=h(t)
+}
+\]
+
+where \(h(t)\) is the impulse response.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Why is \(h(t)\) Important?}
+
+For an LTI system, knowing \(h(t)\) is sufficient to determine the output for
+\emph{any} input signal.
+
+\[
+\boxed{
+\text{Input }x(t)
+\quad \xrightarrow{\text{LTI}}
+\quad
+\text{Output }y(t)
+}
+\]
+
+The relationship between \(x(t)\) and \(h(t)\) is called
+\textbf{convolution}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Impulse Decomposition of a Signal}
+
+Any signal can be represented as a continuous sum of shifted impulses:
+
+\[
+\boxed{
+x(t)=\int_{-\infty}^{\infty}x(\tau)\delta(t-\tau)\,d\tau
+}
+\]
+
+This is obtained from the sifting property of the delta function.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Response to a Shifted Impulse}
+
+For input
+
+\[
+\delta(t-\tau),
+\]
+
+the output is
+
+\[
+h(t-\tau).
+\]
+
+Because of linearity and time invariance,
+
+\[
+\boxed{
+\delta(t-\tau)\ \longrightarrow\ h(t-\tau)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Derivation of the Convolution Integral}
+
+Starting from
+
+\[
+x(t)=\int_{-\infty}^{\infty}x(\tau)\delta(t-\tau)\,d\tau,
+\]
+
+apply the system operator:
+
+\[
+y(t)=T\{x(t)\}.
+\]
+
+Using linearity,
+
+\[
+y(t)=
+\int_{-\infty}^{\infty}
+x(\tau)\,T\{\delta(t-\tau)\}\,d\tau.
+\]
+
+Since
+
+\[
+T\{\delta(t-\tau)\}=h(t-\tau),
+\]
+
+we obtain
+
+\[
+\boxed{
+y(t)=\int_{-\infty}^{\infty}x(\tau)h(t-\tau)\,d\tau
+}
+\]
+
+This is the \textbf{convolution integral}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution Notation}
+
+\[
+\boxed{
+y(t)=x(t)*h(t)
+}
+\]
+
+where \(*\) denotes convolution.
+
+Thus,
+
+\[
+\boxed{
+x(t)*h(t)
+=
+\int_{-\infty}^{\infty}x(\tau)h(t-\tau)\,d\tau
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Graphical Interpretation}
+
+Convolution can be understood through four steps:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 1: Flip}
+
+Replace \(h(\tau)\) by
+
+\[
+h(-\tau).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 2: Shift}
+
+Shift by \(t\):
+
+\[
+h(t-\tau).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 3: Multiply}
+
+Multiply
+
+\[
+x(\tau)\,h(t-\tau).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 4: Integrate}
+
+Integrate over all \(\tau\):
+
+\[
+y(t)=\int x(\tau)h(t-\tau)\,d\tau.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution of Two Unit Steps}
+
+Let
+
+\[
+x(t)=u(t),
+\qquad
+h(t)=u(t).
+\]
+
+Then,
+
+\[
+y(t)=\int_{-\infty}^{\infty}u(\tau)u(t-\tau)\,d\tau.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Determine Limits}
+
+The integrand is nonzero when
+
+\[
+\tau\ge0
+\]
+
+and
+
+\[
+t-\tau\ge0
+\quad\Rightarrow\quad
+\tau\le t.
+\]
+
+Therefore,
+
+\[
+0\le\tau\le t.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Evaluate}
+
+\[
+y(t)=\int_0^t 1\,d\tau=t.
+\]
+
+Hence,
+
+\[
+\boxed{
+u(t)*u(t)=t\,u(t)
+}
+\]
+
+This result is extremely important.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Graphical Result}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-0.5,0) -- (5,0) node[right] {$t$};
+\draw[->] (0,-0.5) -- (0,4) node[above] {$y(t)$};
+
+\draw[thick] (-0.5,0) -- (0,0);
+\draw[thick] (0,0) -- (4,3.2);
+\node[right] at (3,2.6) {$t\,u(t)$};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution with an Impulse}
+
+Let
+
+\[
+x(t)*\delta(t).
+\]
+
+Using the convolution integral,
+
+\[
+y(t)=
+\int_{-\infty}^{\infty}
+x(\tau)\delta(t-\tau)\,d\tau.
+\]
+
+By the sifting property,
+
+\[
+\boxed{
+x(t)*\delta(t)=x(t)
+}
+\]
+
+Thus, the impulse acts as the identity element for convolution.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Important Convolution Pairs}
+
+\begin{table}[H]
+\centering
+\caption{Common convolution results}
+\begin{tabular}{|p{5cm}|p{5cm}|}
+\hline
+\textbf{Signals} & \textbf{Result} \\
+\hline
+\(x(t)*\delta(t)\) & \(x(t)\) \\
+\hline
+\(u(t)*u(t)\) & \(t\,u(t)\) \\
+\hline
+\(u(t)*t\,u(t)\) & \(\dfrac{t^2}{2}u(t)\) \\
+\hline
+\(e^{-at}u(t)*u(t)\) & \(\dfrac{1-e^{-at}}{a}u(t)\) \\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Properties of Convolution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Commutative}
+
+\[
+\boxed{
+x(t)*h(t)=h(t)*x(t)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Associative}
+
+\[
+\boxed{
+[x_1(t)*x_2(t)]*x_3(t)
+=
+x_1(t)*[x_2(t)*x_3(t)]
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Distributive}
+
+\[
+\boxed{
+x(t)*[h_1(t)+h_2(t)]
+=
+x(t)*h_1(t)+x(t)*h_2(t)
+}
+\]
+
+These properties greatly simplify convolution calculations.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Worked Example 3.1}
+
+Find
+
+\[
+y(t)=u(t)*u(t).
+\]
+
+\textbf{Solution}
+
+\[
+y(t)=\int_{-\infty}^{\infty}u(\tau)u(t-\tau)\,d\tau
+\]
+
+The valid region is
+
+\[
+0\le\tau\le t.
+\]
+
+Therefore,
+
+\[
+y(t)=\int_0^t 1\,d\tau=t.
+\]
+
+Hence,
+
+\[
+\boxed{
+y(t)=t\,u(t)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tcolorbox}[title=Quick Recall,colback=yellow!10]
+
+\[
+y(t)=x(t)*h(t)
+\]
+
+\[
+y(t)=\int_{-\infty}^{\infty}x(\tau)h(t-\tau)\,d\tau
+\]
+
+\[
+u(t)*u(t)=t\,u(t)
+\]
+
+\[
+x(t)*\delta(t)=x(t)
+\]
+
+Flip \(\rightarrow\) Shift \(\rightarrow\) Multiply \(\rightarrow\) Integrate
+
+\end{tcolorbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Graphical Convolution in Detail}
+
+Consider
+
+\[
+x(t)=u(t),
+\qquad
+h(t)=u(t)-u(t-1).
+\]
+
+The impulse response is a rectangular pulse of width 1.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 1: Flip}
+
+\[
+h(-\tau)=u(-\tau)-u(-\tau-1).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 2: Shift}
+
+\[
+h(t-\tau)=u(t-\tau)-u(t-\tau-1).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 3: Overlap Region}
+
+The overlap exists when
+
+\[
+\tau\ge0
+\]
+
+and
+
+\[
+t-1\le\tau\le t.
+\]
+
+Hence,
+
+\[
+\max(0,t-1)\le\tau\le t.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 4: Integrate}
+
+For \(0<t<1\),
+
+\[
+y(t)=\int_0^t 1\,d\tau=t.
+\]
+
+For \(t\ge1\),
+
+\[
+y(t)=\int_{t-1}^{t}1\,d\tau=1.
+\]
+
+Therefore,
+
+\[
+\boxed{
+y(t)=
+\begin{cases}
+0, & t<0\\
+t, & 0\le t<1\\
+1, & t\ge1
+\end{cases}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution of Rectangular Pulses}
+
+Let
+
+\[
+x(t)=u(t)-u(t-T),
+\]
+
+\[
+h(t)=u(t)-u(t-T).
+\]
+
+Both are pulses of width \(T\).
+
+The result is a triangular waveform:
+
+\[
+\boxed{
+y(t)=
+\begin{cases}
+0, & t<0\\
+t, & 0\le t<T\\
+2T-t, & T\le t<2T\\
+0, & t\ge2T
+\end{cases}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-0.5,0) -- (5.5,0) node[right] {$t$};
+\draw[->] (0,-0.5) -- (0,3) node[above] {$y(t)$};
+
+\draw[thick] (0,0) -- (2,2) -- (4,0);
+
+\node[below] at (2,0) {$T$};
+\node[below] at (4,0) {$2T$};
+\end{tikzpicture}
+\end{center}
+
+This result is frequently asked in GATE.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution with an Exponential}
+
+Let
+
+\[
+x(t)=u(t),
+\qquad
+h(t)=e^{-at}u(t),
+\qquad a>0.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Convolution Integral}
+
+\[
+y(t)=\int_{-\infty}^{\infty}
+u(\tau)e^{-a(t-\tau)}u(t-\tau)\,d\tau.
+\]
+
+The valid region is
+
+\[
+0\le\tau\le t.
+\]
+
+Hence,
+
+\[
+y(t)=\int_0^t e^{-a(t-\tau)}\,d\tau.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Evaluation}
+
+\[
+y(t)=e^{-at}\int_0^t e^{a\tau}\,d\tau
+\]
+
+\[
+=e^{-at}\left[\frac{e^{a\tau}}{a}\right]_0^t
+\]
+
+\[
+=\frac{1-e^{-at}}{a}.
+\]
+
+Therefore,
+
+\[
+\boxed{
+u(t)*e^{-at}u(t)
+=
+\frac{1-e^{-at}}{a}u(t)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Output of an LTI System}
+
+For any input,
+
+\[
+\boxed{
+y(t)=x(t)*h(t)
+}
+\]
+
+Thus, the entire behavior of an LTI system is contained in \(h(t)\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Causality of CT-LTI Systems}
+
+A continuous-time LTI system is causal if and only if
+
+\[
+\boxed{
+h(t)=0,\qquad t<0
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+h(t)=e^{-t}u(t)
+\]
+
+Since \(u(t)=0\) for \(t<0\),
+
+\[
+\boxed{
+\text{The system is causal}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Stability of CT-LTI Systems}
+
+A CT-LTI system is BIBO stable if
+
+\[
+\boxed{
+\int_{-\infty}^{\infty}|h(t)|\,dt<\infty
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+h(t)=e^{-t}u(t)
+\]
+
+\[
+\int_0^\infty e^{-t}dt=1<\infty
+\]
+
+Hence,
+
+\[
+\boxed{
+\text{The system is stable}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Impulse Response and Differential Equations}
+
+Many physical systems are described by differential equations.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{First-Order System}
+
+\[
+\boxed{
+\frac{dy(t)}{dt}+ay(t)=x(t)
+}
+\]
+
+To find \(h(t)\), apply
+
+\[
+x(t)=\delta(t).
+\]
+
+Then,
+
+\[
+\frac{dh(t)}{dt}+ah(t)=\delta(t).
+\]
+
+The solution is
+
+\[
+\boxed{
+h(t)=e^{-at}u(t)
+}
+\]
+
+This is the impulse response of a first-order stable system.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{RC Circuit Example}
+
+Consider a series RC circuit with output across the capacitor.
+
+The governing equation is
+
+\[
+RC\frac{dy(t)}{dt}+y(t)=x(t).
+\]
+
+Comparing with the standard form,
+
+\[
+a=\frac{1}{RC}.
+\]
+
+Therefore,
+
+\[
+\boxed{
+h(t)=\frac{1}{RC}e^{-t/(RC)}u(t)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Step Response}
+
+The step response is the output for
+
+\[
+x(t)=u(t).
+\]
+
+Using convolution,
+
+\[
+s(t)=u(t)*h(t).
+\]
+
+For the RC circuit,
+
+\[
+s(t)=
+\int_0^t
+\frac{1}{RC}e^{-(t-\tau)/(RC)}\,d\tau.
+\]
+
+Evaluating,
+
+\[
+\boxed{
+s(t)=\left(1-e^{-t/(RC)}\right)u(t)
+}
+\]
+
+This is the familiar charging equation of a capacitor.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Convolution Summary}
+
+\begin{table}[H]
+\centering
+\caption{Important convolution results}
+\begin{tabular}{|p{6cm}|p{5cm}|}
+\hline
+\textbf{Convolution} & \textbf{Result} \\
+\hline
+\(x(t)*\delta(t)\) & \(x(t)\) \\
+\hline
+\(u(t)*u(t)\) & \(t\,u(t)\) \\
+\hline
+\(u(t)*t\,u(t)\) & \(\dfrac{t^2}{2}u(t)\) \\
+\hline
+\(u(t)*e^{-at}u(t)\) & \(\dfrac{1-e^{-at}}{a}u(t)\) \\
+\hline
+Rectangular pulse * rectangular pulse & Triangular pulse \\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Problem-Solving Strategy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 1}
+
+Identify \(x(t)\) and \(h(t)\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 2}
+
+Write
+
+\[
+y(t)=\int x(\tau)h(t-\tau)\,d\tau.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 3}
+
+Determine the overlap region.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 4}
+
+Set the correct limits of integration.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 5}
+
+Evaluate the integral.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Step 6}
+
+Express the answer using unit-step functions if required.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Common GATE Mistakes}
+
+\begin{enumerate}
+\item Forgetting to flip \(h(\tau)\) before shifting.
+\item Using incorrect overlap limits.
+\item Forgetting the unit-step multiplier.
+\item Confusing convolution with ordinary multiplication.
+\item Assuming convolution is not commutative.
+\item Ignoring the causality condition \(h(t)=0\) for \(t<0\).
+\item Forgetting the absolute value in the stability integral.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Chapter Summary}
+
+In this chapter, we studied continuous-time LTI systems and showed that the
+output of an LTI system is obtained by convolving the input with the impulse
+response.
+
+We derived the convolution integral from the impulse decomposition of a signal
+and learned the graphical interpretation of convolution through the
+flip-shift-multiply-integrate procedure.
+
+We also studied
+
+\begin{itemize}
+\item convolution of step signals,
+\item convolution of rectangular pulses,
+\item convolution with exponential signals,
+\item causality and stability conditions,
+\item and impulse responses obtained from differential equations.
+\end{itemize}
+
+These concepts form the foundation for Fourier analysis and frequency-domain
+representation of systems.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tcolorbox}[title=One-Minute Revision,colback=blue!5]
+
+\[
+y(t)=x(t)*h(t)
+\]
+
+\[
+y(t)=\int_{-\infty}^{\infty}x(\tau)h(t-\tau)\,d\tau
+\]
+
+\[
+u(t)*u(t)=t\,u(t)
+\]
+
+\[
+u(t)*e^{-at}u(t)=\frac{1-e^{-at}}{a}u(t)
+\]
+
+Causal:
+
+\[
+h(t)=0,\quad t<0
+\]
+
+Stable:
+
+\[
+\int_{-\infty}^{\infty}|h(t)|dt<\infty
+\]
+
+RC impulse response:
+
+\[
+h(t)=\frac{1}{RC}e^{-t/(RC)}u(t)
+\]
+
+RC step response:
+
+\[
+s(t)=\left(1-e^{-t/(RC)}\right)u(t)
+\]
+
+\end{tcolorbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

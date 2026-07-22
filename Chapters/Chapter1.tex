@@ -1,0 +1,986 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHAPTER 1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Introduction and Classification of Signals}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!70!black,title=Learning Objectives]
+
+After studying this chapter, the reader will be able to
+
+\begin{itemize}
+\item Define a signal and understand its role in engineering.
+\item Distinguish between continuous-time and discrete-time signals.
+\item Classify signals as analog or digital.
+\item Identify deterministic and random signals.
+\item Understand periodic and aperiodic signals.
+\item Recognize energy and power signals.
+\item Determine whether a signal is even or odd.
+\item Understand elementary signals used in Signals and Systems.
+\end{itemize}
+
+\end{tcolorbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+Signals and Systems is one of the most fundamental subjects in Electronics and
+Communication Engineering. Every communication system, control system, embedded
+system and signal-processing algorithm is built upon the concepts of signals and
+their transformation through systems.
+
+Examples include
+
+\begin{itemize}
+\item speech signals,
+\item ECG signals,
+\item satellite telemetry,
+\item sensor outputs,
+\item image signals,
+\item and digital communication waveforms.
+\end{itemize}
+
+The main objective of this subject is to understand
+
+\begin{enumerate}
+\item how signals are represented,
+\item how systems operate on signals,
+\item and how signals can be analyzed in time and frequency domains.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{What is a Signal?}
+
+\subsection{Definition}
+
+A \textbf{signal} is a function that conveys information about the behavior or
+nature of a phenomenon.
+
+Mathematically,
+
+\[
+x(t),\qquad x[n],\qquad x(t_1,t_2,\ldots)
+\]
+
+are all signals.
+
+Here,
+
+\begin{itemize}
+\item \(x\) is the dependent variable (signal value),
+\item \(t\) or \(n\) is the independent variable.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Examples}
+
+\begin{table}[H]
+\centering
+\caption{Examples of engineering signals}
+\begin{tabular}{|p{5cm}|p{6cm}|}
+\hline
+\textbf{Signal} & \textbf{Mathematical Form} \\
+\hline
+DC voltage & \(x(t)=5\) \\
+\hline
+Sinusoidal voltage & \(x(t)=10\sin(100\pi t)\) \\
+\hline
+Temperature variation & \(x(t)=25+2\sin(0.1t)\) \\
+\hline
+Digital bit sequence & \(x[n]\in\{0,1\}\) \\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Independent Variable}
+
+The independent variable may represent
+
+\begin{itemize}
+\item time,
+\item position,
+\item angle,
+\item frequency,
+\item or any measurable quantity.
+\end{itemize}
+
+In Signals and Systems, the most common independent variable is \textbf{time}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Continuous-Time Signal}
+
+\subsection{Definition}
+
+A signal defined for every value of time is called a
+\textbf{continuous-time (CT) signal}.
+
+\[
+x(t),\qquad -\infty<t<\infty
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+x(t)=A\cos(\omega t+\phi)
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-0.5,0) -- (6.5,0) node[right] {$t$};
+\draw[->] (0,-1.5) -- (0,1.5) node[above] {$x(t)$};
+
+\draw[thick,smooth,samples=100,domain=0:6]
+plot(\x,{sin(deg(1.2*\x))});
+
+\node at (3,1.2) {$x(t)$};
+\end{tikzpicture}
+\end{center}
+
+The signal exists for all time instants.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Discrete-Time Signal}
+
+\subsection{Definition}
+
+A signal defined only at discrete instants of time is called a
+\textbf{discrete-time (DT) signal}.
+
+\[
+x[n],\qquad n\in\mathbb{Z}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+\[
+x[n]=\sin\left(\frac{\pi n}{4}\right)
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-0.5,0) -- (7.5,0) node[right] {$n$};
+\draw[->] (0,-1.5) -- (0,1.5) node[above] {$x[n]$};
+
+\foreach \n in {0,1,2,3,4,5,6,7}{
+  \pgfmathsetmacro{\y}{sin(deg(pi*\n/4))}
+  \draw[thick] (\n,0) -- (\n,\y);
+  \filldraw (\n,\y) circle (2pt);
+}
+\end{tikzpicture}
+\end{center}
+
+Only the sampled values exist.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Analog and Digital Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Analog Signal}
+
+An analog signal has a continuous range of amplitudes.
+
+\[
+x(t)\in\mathbb{R}
+\]
+
+Examples:
+
+\begin{itemize}
+\item microphone output,
+\item ECG waveform,
+\item temperature sensor voltage.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Digital Signal}
+
+A digital signal has a finite set of amplitude values.
+
+For binary signals,
+
+\[
+x[n]\in\{0,1\}
+\]
+
+Examples:
+
+\begin{itemize}
+\item UART data,
+\item SPI signals,
+\item microcontroller GPIO levels.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Deterministic and Random Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Deterministic Signal}
+
+A signal whose value can be predicted exactly.
+
+Example:
+
+\[
+x(t)=5\cos(2\pi 100t)
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Random Signal}
+
+A signal whose future values cannot be predicted exactly.
+
+Examples:
+
+\begin{itemize}
+\item thermal noise,
+\item atmospheric noise,
+\item stock-price fluctuations.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Periodic Signal}
+
+\subsection{Continuous-Time}
+
+A signal is periodic if
+
+\[
+\boxed{
+x(t)=x(t+T)
+}
+\]
+
+for some positive constant \(T\).
+
+The smallest such \(T\) is called the
+\textbf{fundamental period}.
+
+Example:
+
+\[
+x(t)=\sin(2\pi f t)
+\]
+
+\[
+T=\frac{1}{f}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Discrete-Time}
+
+A discrete-time signal is periodic if
+
+\[
+\boxed{
+x[n]=x[n+N]
+}
+\]
+
+where \(N\) is the fundamental period in samples.
+
+Example:
+
+\[
+x[n]=\cos\left(\frac{\pi n}{2}\right)
+\]
+
+Here,
+
+\[
+N=4.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Aperiodic Signal}
+
+A signal that does not repeat is called \textbf{aperiodic}.
+
+Example:
+
+\[
+x(t)=e^{-t}u(t)
+\]
+
+This signal decays with time and never repeats.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Even and Odd Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Even Signal}
+
+\[
+\boxed{
+x(t)=x(-t)
+}
+\]
+
+Example:
+
+\[
+x(t)=t^2
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Odd Signal}
+
+\[
+\boxed{
+x(t)=-x(-t)
+}
+\]
+
+Example:
+
+\[
+x(t)=t
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Signal Decomposition}
+
+Any signal can be written as
+
+\[
+\boxed{
+x(t)=x_e(t)+x_o(t)
+}
+\]
+
+where
+
+\[
+x_e(t)=\frac{x(t)+x(-t)}{2}
+\]
+
+\[
+x_o(t)=\frac{x(t)-x(-t)}{2}
+\]
+
+This decomposition is very important in Fourier analysis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tcolorbox}[title=Quick Recall,colback=yellow!10]
+
+\[
+x(t)\rightarrow \text{continuous-time}
+\]
+
+\[
+x[n]\rightarrow \text{discrete-time}
+\]
+
+\[
+x(t)=x(t+T)\rightarrow \text{periodic}
+\]
+
+\[
+x(t)=x(-t)\rightarrow \text{even}
+\]
+
+\[
+x(t)=-x(-t)\rightarrow \text{odd}
+\]
+
+\end{tcolorbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Energy and Power Signals}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Energy of a Continuous-Time Signal}
+
+The energy of a signal is
+
+\[
+\boxed{
+E=\int_{-\infty}^{\infty}|x(t)|^2dt
+}
+\]
+
+A signal is called an \textbf{energy signal} if
+
+\[
+0<E<\infty.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+Consider
+
+\[
+x(t)=e^{-t}u(t).
+\]
+
+Then,
+
+\[
+E=\int_0^\infty e^{-2t}dt
+\]
+
+\[
+E=\left[-\frac{e^{-2t}}{2}\right]_0^\infty
+\]
+
+\[
+\boxed{
+E=\frac{1}{2}
+}
+\]
+
+Hence, this is an energy signal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Average Power of a Continuous-Time Signal}
+
+\[
+\boxed{
+P=\lim_{T\to\infty}\frac{1}{2T}
+\int_{-T}^{T}|x(t)|^2dt
+}
+\]
+
+A signal is called a \textbf{power signal} if
+
+\[
+0<P<\infty.
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Example}
+
+For
+
+\[
+x(t)=A\cos(\omega t),
+\]
+
+\[
+P=\frac{A^2}{2}.
+\]
+
+Thus, a sinusoidal signal is a power signal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Relationship Between Energy and Power}
+
+\begin{table}[H]
+\centering
+\caption{Energy and power signals}
+\begin{tabular}{|p{5cm}|p{5cm}|}
+\hline
+\textbf{Energy Signal} & \textbf{Power Signal} \\
+\hline
+Finite energy & Infinite energy \\
+\hline
+Zero average power & Finite average power \\
+\hline
+Usually non-periodic & Usually periodic \\
+\hline
+Example: pulse & Example: sinusoid \\
+\hline
+\end{tabular}
+\end{table}
+
+A non-zero signal cannot be both an energy signal and a power signal.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Unit Impulse Signal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Definition}
+
+The \textbf{unit impulse} is denoted by
+
+\[
+\boxed{
+\delta(t)
+}
+\]
+
+and is defined by
+
+\[
+\delta(t)=0,\qquad t\neq0
+\]
+
+with the property
+
+\[
+\boxed{
+\int_{-\infty}^{\infty}\delta(t)\,dt=1
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-2,0) -- (2,0) node[right] {$t$};
+\draw[->] (0,0) -- (0,2) node[above] {$\delta(t)$};
+
+\draw[very thick] (0,0) -- (0,1.8);
+\filldraw (0,1.8) circle (2pt);
+\node[right] at (0,1.6) {Area = 1};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Sifting Property}
+
+\[
+\boxed{
+\int_{-\infty}^{\infty}x(t)\delta(t-t_0)\,dt=x(t_0)
+}
+\]
+
+The impulse extracts the value of the signal at \(t=t_0\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Unit Step Signal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Definition}
+
+The \textbf{unit step} is denoted by
+
+\[
+\boxed{
+u(t)
+}
+\]
+
+and is defined as
+
+\[
+u(t)=
+\begin{cases}
+0, & t<0\\
+1, & t>0
+\end{cases}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-3,0) -- (3,0) node[right] {$t$};
+\draw[->] (0,-0.5) -- (0,1.8) node[above] {$u(t)$};
+
+\draw[thick] (-3,0) -- (0,0);
+\draw[thick] (0,1) -- (3,1);
+\filldraw (0,1) circle (2pt);
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Relationship with Impulse}
+
+\[
+\boxed{
+\frac{d}{dt}u(t)=\delta(t)
+}
+\]
+
+and
+
+\[
+\boxed{
+u(t)=\int_{-\infty}^{t}\delta(\tau)\,d\tau
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Delayed Step Signal}
+
+A delayed step is
+
+\[
+\boxed{
+u(t-t_0)
+}
+\]
+
+It becomes 1 at \(t=t_0\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Rectangular Pulse}
+
+A pulse of width \(T\) is represented as
+
+\[
+\boxed{
+p(t)=u(t)-u(t-T)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-1,0) -- (6,0) node[right] {$t$};
+\draw[->] (0,-0.5) -- (0,1.8) node[above] {$p(t)$};
+
+\draw[thick] (-1,0) -- (0,0);
+\draw[thick] (0,1) -- (4,1);
+\draw[thick] (4,1) -- (4,0);
+\draw[thick] (4,0) -- (6,0);
+
+\node[below] at (0,0) {$0$};
+\node[below] at (4,0) {$T$};
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Ramp Signal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Definition}
+
+The ramp signal is
+
+\[
+\boxed{
+r(t)=tu(t)
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-1,0) -- (5,0) node[right] {$t$};
+\draw[->] (0,-0.5) -- (0,4) node[above] {$r(t)$};
+
+\draw[thick] (-1,0) -- (0,0);
+\draw[thick] (0,0) -- (4,3.2);
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Derivative}
+
+\[
+\boxed{
+\frac{d}{dt}r(t)=u(t)
+}
+\]
+
+Thus,
+
+\[
+r(t)\xrightarrow{d/dt}u(t)\xrightarrow{d/dt}\delta(t).
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Exponential Signal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{General Form}
+
+\[
+\boxed{
+x(t)=Ae^{at}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Cases}
+
+\begin{table}[H]
+\centering
+\caption{Exponential signal behavior}
+\begin{tabular}{|c|c|}
+\hline
+\(a\) & Behavior \\
+\hline
+\(a<0\) & Decaying exponential \\
+\hline
+\(a>0\) & Growing exponential \\
+\hline
+\(a=0\) & Constant signal \\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Decaying Exponential}
+
+\[
+x(t)=e^{-at}u(t),\qquad a>0
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-0.5,0) -- (6,0) node[right] {$t$};
+\draw[->] (0,0) -- (0,3) node[above] {$x(t)$};
+
+\draw[thick,smooth,samples=100,domain=0:5.5]
+plot(\x,{2.5*exp(-0.6*\x)});
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Sinusoidal Signal}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{General Form}
+
+\[
+\boxed{
+x(t)=A\cos(\omega t+\phi)
+}
+\]
+
+where
+
+\begin{itemize}
+\item \(A\): amplitude,
+\item \(\omega\): angular frequency (rad/s),
+\item \(\phi\): phase angle.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Frequency and Period}
+
+\[
+\boxed{
+f=\frac{\omega}{2\pi}
+}
+\]
+
+\[
+\boxed{
+T=\frac{1}{f}=\frac{2\pi}{\omega}
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Graph}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+\draw[->] (-0.5,0) -- (7,0) node[right] {$t$};
+\draw[->] (0,-2) -- (0,2) node[above] {$x(t)$};
+
+\draw[thick,smooth,samples=100,domain=0:6.5]
+plot(\x,{1.5*cos(deg(1.2*\x))});
+\end{tikzpicture}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Complex Exponential Signal}
+
+Using Euler's formula,
+
+\[
+\boxed{
+e^{j\theta}=\cos\theta+j\sin\theta
+}
+\]
+
+Therefore,
+
+\[
+\boxed{
+x(t)=Ae^{j\omega t}
+}
+\]
+
+is a complex sinusoid.
+
+This representation is extensively used in Fourier analysis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Important Signal Relationships}
+
+\[
+\boxed{
+\frac{d}{dt}u(t)=\delta(t)
+}
+\]
+
+\[
+\boxed{
+\frac{d}{dt}r(t)=u(t)
+}
+\]
+
+\[
+\boxed{
+\frac{d^2}{dt^2}r(t)=\delta(t)
+}
+\]
+
+\[
+\boxed{
+u(t)=\int_{-\infty}^{t}\delta(\tau)d\tau
+}
+\]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Quick Classification Examples}
+
+\begin{table}[H]
+\centering
+\caption{Signal classification examples}
+\begin{tabular}{|p{5cm}|p{6cm}|}
+\hline
+\textbf{Signal} & \textbf{Type} \\
+\hline
+\(e^{-t}u(t)\) & Energy signal \\
+\hline
+\(\sin(10t)\) & Power signal \\
+\hline
+\(u(t)\) & Power signal \\
+\hline
+\(\delta(t)\) & Energy signal \\
+\hline
+\(t^2\) & Neither energy nor power \\
+\hline
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Chapter Summary}
+
+In this chapter, we introduced the fundamental concept of signals and classified
+them into continuous-time, discrete-time, analog, digital, deterministic,
+random, periodic, aperiodic, even and odd signals.
+
+We also studied the elementary signals that form the foundation of the entire
+Signals and Systems course:
+
+\begin{itemize}
+\item unit impulse,
+\item unit step,
+\item rectangular pulse,
+\item ramp,
+\item exponential,
+\item sinusoidal,
+\item and complex exponential signals.
+\end{itemize}
+
+Finally, we introduced the concepts of energy and power signals, which are
+essential for Fourier analysis and communication theory.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{tcolorbox}[title=One-Minute Revision,colback=blue!5]
+
+\[
+x(t)\rightarrow \text{CT signal}
+\]
+
+\[
+x[n]\rightarrow \text{DT signal}
+\]
+
+\[
+E=\int_{-\infty}^{\infty}|x(t)|^2dt
+\]
+
+\[
+P=\lim_{T\to\infty}\frac{1}{2T}\int_{-T}^{T}|x(t)|^2dt
+\]
+
+\[
+\frac{d}{dt}u(t)=\delta(t)
+\]
+
+\[
+r(t)=tu(t)
+\]
+
+\[
+x(t)=Ae^{at}
+\]
+
+\[
+x(t)=A\cos(\omega t+\phi)
+\]
+
+\[
+T=\frac{2\pi}{\omega}
+\]
+
+\[
+e^{j\theta}=\cos\theta+j\sin\theta
+\]
+
+\end{tcolorbox}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
